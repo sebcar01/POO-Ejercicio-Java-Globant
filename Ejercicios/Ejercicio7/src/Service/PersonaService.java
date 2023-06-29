@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class PersonaService {
 
-    Scanner sc = new Scanner(System.in).useDelimiter("\n");
+    private final Scanner sc = new Scanner(System.in).useDelimiter("\n");
     public Persona crearPersona(){
         char sexo;
         String sxo;

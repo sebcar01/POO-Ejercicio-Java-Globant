@@ -3,6 +3,7 @@ package Main;
 import Entidades.Persona;
 import Service.PersonaService;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Ejercicio7Main {
@@ -27,6 +28,7 @@ public class Ejercicio7Main {
 
     }
     public static void validarIMC(PersonaService ps, Persona p, int[] imc) {
+        DecimalFormat df = new DecimalFormat("#.##");
 
         if (ps.calcularIMC(p) == -1) {
 
@@ -46,7 +48,7 @@ public class Ejercicio7Main {
 
         }
 
-        System.out.println("IMC = " + p.getImc());
+        System.out.println("IMC = " + df.format(p.getImc()));
 
     }
 
