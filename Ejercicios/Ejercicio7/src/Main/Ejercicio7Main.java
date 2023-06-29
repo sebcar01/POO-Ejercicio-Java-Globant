@@ -9,29 +9,14 @@ public class Ejercicio7Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in).useDelimiter("\n");
-        int totalPersonas = 0;
+        System.out.println("Ingresa el total de personas");
+        int totalPersonas = sc.nextInt();
+        PersonaService ps = new PersonaService();
+        Persona[] personas = new Persona[totalPersonas];
         int[] imc = new int[3];
         int[] edad = new int[2];
 
-        PersonaService ps = new PersonaService();
-
-        Persona p1 = ps.crearPersona();
-        validarIMC(ps, p1,imc);
-        validarEdad(ps, p1,edad);
-        totalPersonas += 1;
-        Persona p2 = ps.crearPersona();
-        validarIMC(ps, p2,imc);
-        validarEdad(ps, p2,edad);
-        totalPersonas += 1;
-        Persona p3 = ps.crearPersona();
-        validarIMC(ps, p3,imc);
-        validarEdad(ps, p3,edad);
-        totalPersonas += 1;
-        Persona p4 = ps.crearPersona();
-        validarIMC(ps, p4,imc);
-        validarEdad(ps, p4,edad);
-        totalPersonas += 1;
-
+        personas(ps, personas, imc, edad, totalPersonas);
 
         System.out.println(imc[0] == 0 ? "No hay ninguna persona debajo de su peso ideal" : "El porcentaje de personas debajo de su peso ideal es: " + ((imc[0] * 100) / totalPersonas) + "%");
         System.out.println(imc[1] == 0 ? "No hay ninguna persona con peso ideal" : "El porcentaje de personas con peso ideal es: " + ((imc[1] * 100) / totalPersonas) + "%");
@@ -78,6 +63,19 @@ public class Ejercicio7Main {
 
             edad[1] += 1;
             System.out.println("Eres menor de edad");
+
+        }
+
+    }
+
+    public static void personas(PersonaService ps, Persona[] p, int[] imc, int[] edad, int totalPersonas) {
+
+        for (int i = 0; i <= totalPersonas - 1; i++) {
+
+            System.out.println("Ingresa los datos de la persona " + (i + 1));
+            p[i] = ps.crearPersona();
+            validarIMC(ps, p[i],imc);
+            validarEdad(ps, p[i],edad);
 
         }
 
