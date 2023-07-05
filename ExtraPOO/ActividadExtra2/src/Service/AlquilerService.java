@@ -56,6 +56,7 @@ public class AlquilerService {
     }
 
     public void calcularIngreso(Pelicula[] p, Alquiler[] a, int cantidad) {
+        int validacion = 0;
 
         System.out.println("Ingresa el nombre de la película a devolver");
         String nombre = sc.next();
@@ -68,6 +69,7 @@ public class AlquilerService {
 
             } else if (p[i].getTitulo().equalsIgnoreCase(nombre)) {
 
+                validacion = 1;
                 System.out.println("Ingresa la fecha de devolución");
                 System.out.println("Ingresa el día");
                 int dia = sc.nextInt();
@@ -92,11 +94,13 @@ public class AlquilerService {
 
                 }
 
-            } else {
-
-                System.out.println("La película ingresada no existe.");
-
             }
+
+        }
+
+        if (validacion == 0) {
+
+            System.out.println("La película ingresada no existe.");
 
         }
 
