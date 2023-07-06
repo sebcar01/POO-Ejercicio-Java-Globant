@@ -2,6 +2,8 @@ package Service;
 
 import Entidades.Pelicula;
 
+import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PeliculaService {
@@ -9,15 +11,112 @@ public class PeliculaService {
     Scanner sc = new Scanner(System.in).useDelimiter("\n");
 
     public void crearPelicula(Pelicula[] p, int cantidad){
+        int anio = 0;
+        String verificacion = "";
+        String genero = "";
+        int opcionGenero = 0;
+        int duracion = 0;
+        boolean excepcion = false;
+        LocalDate fh = LocalDate.now();
 
         System.out.println("Ingresa el título");
         String titulo = sc.next();
-        System.out.println("Ingresa el género");
-        String genero = sc.next();
-        System.out.println("Ingresa el año");
-        int anio = sc.nextInt();
-        System.out.println("Ingresa la duración");
-        int duracion = sc.nextInt();
+
+        do {
+
+            do {
+
+                try {
+
+                    System.out.println("Selecciona el género");
+                    System.out.println("1 - Acción");
+                    System.out.println("2 - Aventura");
+                    System.out.println("3 - Ciencia Ficción");
+                    System.out.println("4 - Comedia");
+                    System.out.println("5 - Drama");
+                    System.out.println("6 - Documental");
+                    System.out.println("7 - Fantasía");
+                    System.out.println("8 - Musical");
+                    System.out.println("9 - Terror");
+                    System.out.println("10 - Familiar");
+                    System.out.println("11 - Otro");
+                    opcionGenero = sc.nextInt();
+                    excepcion = false;
+
+                } catch (InputMismatchException e) {
+
+                    sc.next();
+                    excepcion = true;
+                    System.out.println("Solo puedes ingresar números!");
+
+                }
+
+            } while (excepcion);
+
+            switch (opcionGenero) {
+
+                case 1 -> genero = "Accion";
+                case 2 -> genero = "Aventura";
+                case 3 -> genero = "Ciencia Ficcion";
+                case 4 -> genero = "Comedia";
+                case 5 -> genero = "Drama";
+                case 6 -> genero = "Documental";
+                case 7 -> genero = "Fantasia";
+                case 8 -> genero = "Musical";
+                case 9 -> genero = "Terror";
+                case 10 -> genero = "Familiar";
+                case 11 -> genero = "Otro";
+                default -> System.out.println("Opción inválida!");
+
+            }
+
+        } while (opcionGenero < 1 || opcionGenero > 11);
+
+        do {
+
+            do {
+
+                try {
+
+                    System.out.println("Ingresa el año. Tiene que ser de 4 dígitos.");
+                    anio = sc.nextInt();
+                    verificacion = String.valueOf(anio);
+                    excepcion = false;
+
+                } catch (InputMismatchException e) {
+
+                    sc.next();
+                    excepcion = true;
+                    System.out.println("Solo puedes ingresar números!");
+
+                }
+
+            } while (excepcion);
+
+        } while (verificacion.length() != 4 || anio < 1895 || anio > fh.getYear() );
+
+        do {
+
+            do {
+
+                try {
+
+                    System.out.println("Ingresa la duración en horas. Máximo dos dígitos.");
+                    duracion = sc.nextInt();
+                    verificacion = String.valueOf(duracion);
+                    excepcion = false;
+
+                } catch (InputMismatchException e) {
+
+                    sc.next();
+                    excepcion = true;
+                    System.out.println("Solo puedes ingresar números!");
+
+                }
+
+            } while (excepcion);
+
+        } while (verificacion.length() > 2 || duracion < 1);
 
         for (int i = 0; i <= cantidad - 1; i++) {
 
@@ -109,12 +208,61 @@ public class PeliculaService {
     }
 
     public void buscarGenero(Pelicula[] arreglo, int cantidad) {
-        boolean verificacion = false;
+        String genero = "";
+        int opcionGenero = 0;
+        boolean excepcion = false;
 
-        System.out.println("Ingresa el nombre del género");
-        String nombre = sc.next();
+        do {
 
-        System.out.println("Películas del género " + nombre);
+            do {
+
+                try {
+
+                    System.out.println("Selecciona el género");
+                    System.out.println("1 - Acción");
+                    System.out.println("2 - Aventura");
+                    System.out.println("3 - Ciencia Ficción");
+                    System.out.println("4 - Comedia");
+                    System.out.println("5 - Drama");
+                    System.out.println("6 - Documental");
+                    System.out.println("7 - Fantasía");
+                    System.out.println("8 - Musical");
+                    System.out.println("9 - Terror");
+                    System.out.println("10 - Familiar");
+                    System.out.println("11 - Otro");
+                    opcionGenero = sc.nextInt();
+                    excepcion = false;
+
+                } catch (InputMismatchException e) {
+
+                    sc.next();
+                    excepcion = true;
+                    System.out.println("Solo puedes ingresar números!");
+
+                }
+
+            } while (excepcion);
+
+            switch (opcionGenero) {
+
+                case 1 -> genero = "Accion";
+                case 2 -> genero = "Aventura";
+                case 3 -> genero = "Ciencia Ficcion";
+                case 4 -> genero = "Comedia";
+                case 5 -> genero = "Drama";
+                case 6 -> genero = "Documental";
+                case 7 -> genero = "Fantasia";
+                case 8 -> genero = "Musical";
+                case 9 -> genero = "Terror";
+                case 10 -> genero = "Familiar";
+                case 11 -> genero = "Otro";
+                default -> System.out.println("Opción inválida!");
+
+            }
+
+        } while (opcionGenero < 1 || opcionGenero > 11);
+
+        System.out.println("Películas del género " + genero);
 
         for (int i = 0; i <= cantidad - 1; i++) {
 
@@ -122,18 +270,11 @@ public class PeliculaService {
 
                 continue;
 
-            } else if (arreglo[i].getGenero().equalsIgnoreCase(nombre)) {
+            } else if (arreglo[i].getGenero().equalsIgnoreCase(genero)) {
 
                 System.out.println(arreglo[i].getTitulo());
-                verificacion = true;
 
             }
-
-        }
-
-        if(!verificacion) {
-
-            System.out.println("No existe ninguna película del género " + nombre);
 
         }
 

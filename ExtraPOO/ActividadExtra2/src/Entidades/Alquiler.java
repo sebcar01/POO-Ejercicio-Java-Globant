@@ -3,7 +3,7 @@ package Entidades;
 import java.time.LocalDate;
 
 public class Alquiler {
-    private boolean peliculaAlquilada;
+    private String peliculaAlquilada;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private double precio;
@@ -11,7 +11,7 @@ public class Alquiler {
     public Alquiler() {
     }
 
-    public Alquiler(boolean peliculaAlquilada, LocalDate fechaInicio, double precio) {
+    public Alquiler(String peliculaAlquilada, LocalDate fechaInicio, double precio) {
         this.peliculaAlquilada = peliculaAlquilada;
         this.fechaInicio = fechaInicio;
         this.precio = precio;
@@ -21,11 +21,11 @@ public class Alquiler {
         this.precio = precio;
     }
 
-    public boolean getPeliculaAlquilada() {
+    public String getPeliculaAlquilada() {
         return peliculaAlquilada;
     }
 
-    public void setPeliculaAlquilada(boolean peliculaAlquilada) {
+    public void setPeliculaAlquilada(String peliculaAlquilada) {
         this.peliculaAlquilada = peliculaAlquilada;
     }
 

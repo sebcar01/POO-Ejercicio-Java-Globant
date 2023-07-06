@@ -5,6 +5,7 @@ import Entidades.Pelicula;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AlquilerService {
@@ -13,6 +14,11 @@ public class AlquilerService {
     public void crearAlquiler(Pelicula[] p, Alquiler[] a, int cantidad){
         boolean verificacion = false;
         int indice = 0;
+        int dia = 0;
+        int mes = 0;
+        int anio = 0;
+        boolean excepcion = false;
+        LocalDate fa = LocalDate.now();
 
         System.out.println("Ingresa el nombre de la película que quieres alquilar");
         String nombre = sc.next();
@@ -36,16 +42,76 @@ public class AlquilerService {
         if (verificacion) {
 
             System.out.println("Ingresa la fecha de inicio");
-            System.out.println("Ingresa el día");
-            int dia = sc.nextInt();
-            System.out.println("Ingresa el mes");
-            int mes = sc.nextInt();
-            System.out.println("Ingresa el año");
-            int anio = sc.nextInt();
+
+            do {
+
+                do {
+
+                    try {
+
+                        System.out.println("Ingresa el día");
+                        dia = sc.nextInt();
+                        excepcion = false;
+
+                    } catch (InputMismatchException e) {
+
+                        sc.next();
+                        excepcion = true;
+                        System.out.println("Solo puedes ingresar números!");
+
+                    }
+
+                } while (excepcion);
+
+            } while (dia < 1 || dia > fa.getDayOfMonth());
+
+            do {
+
+                do {
+
+                    try {
+
+                        System.out.println("Ingresa el mes");
+                        mes = sc.nextInt();
+                        excepcion = false;
+
+                    } catch (InputMismatchException e) {
+
+                        sc.next();
+                        excepcion = true;
+                        System.out.println("Solo puedes ingresar números!");
+
+                    }
+
+                } while (excepcion);
+
+            } while (mes < 1 || mes > 12);
+
+            do {
+
+                do {
+
+                    try {
+
+                        System.out.println("Ingresa el año");
+                        anio = sc.nextInt();
+                        excepcion = false;
+
+                    } catch (InputMismatchException e) {
+
+                        sc.next();
+                        excepcion = true;
+                        System.out.println("Solo puedes ingresar números!");
+
+                    }
+
+                } while (excepcion);
+
+            } while (anio > fa.getYear());
 
             LocalDate fi = LocalDate.of(anio, mes, dia);
 
-            a[indice] = new Alquiler(true, fi, 10);
+            a[indice] = new Alquiler(nombre, fi, 10);
 
         } else {
 
@@ -57,26 +123,91 @@ public class AlquilerService {
 
     public void calcularIngreso(Pelicula[] p, Alquiler[] a, int cantidad) {
         int validacion = 0;
+        int dia = 0;
+        int mes = 0;
+        int anio = 0;
+        boolean excepcion = false;
+        LocalDate fa = LocalDate.now();
 
         System.out.println("Ingresa el nombre de la película a devolver");
         String nombre = sc.next();
 
         for (int i = 0; i <= cantidad - 1; i++) {
 
-            if (p[i] == null) {
+            if (a[i] == null) {
 
                 continue;
 
-            } else if (p[i].getTitulo().equalsIgnoreCase(nombre)) {
+            } else if (a[i].getPeliculaAlquilada().equalsIgnoreCase(nombre)) {
 
                 validacion = 1;
                 System.out.println("Ingresa la fecha de devolución");
-                System.out.println("Ingresa el día");
-                int dia = sc.nextInt();
-                System.out.println("Ingresa el mes");
-                int mes = sc.nextInt();
-                System.out.println("Ingresa el año");
-                int anio = sc.nextInt();
+
+                do {
+
+                    do {
+
+                        try {
+
+                            System.out.println("Ingresa el día");
+                            dia = sc.nextInt();
+                            excepcion = false;
+
+                        } catch (InputMismatchException e) {
+
+                            sc.next();
+                            excepcion = true;
+                            System.out.println("Solo puedes ingresar números!");
+
+                        }
+
+                    } while (excepcion);
+
+                } while (dia < 1 || dia > fa.getDayOfMonth());
+
+                do {
+
+                    do {
+
+                        try {
+
+                            System.out.println("Ingresa el mes");
+                            mes = sc.nextInt();
+                            excepcion = false;
+
+                        } catch (InputMismatchException e) {
+
+                            sc.next();
+                            excepcion = true;
+                            System.out.println("Solo puedes ingresar números!");
+
+                        }
+
+                    } while (excepcion);
+
+                } while (mes < 1 || mes > 12);
+
+                do {
+
+                    do {
+
+                        try {
+
+                            System.out.println("Ingresa el año");
+                            anio = sc.nextInt();
+                            excepcion = false;
+
+                        } catch (InputMismatchException e) {
+
+                            sc.next();
+                            excepcion = true;
+                            System.out.println("Solo puedes ingresar números!");
+
+                        }
+
+                    } while (excepcion);
+
+                } while (anio > fa.getYear());
 
                 LocalDate ff = LocalDate.of(anio, mes, dia);
 
@@ -84,13 +215,16 @@ public class AlquilerService {
                 p[i].setAlquiladaONo(false);
 
                 int dias = a[i].getFechaFin().compareTo(a[i].getFechaInicio());
-                System.out.println(dias);
 
                 if (dias > 3) {
 
                     double calculo = (10 + (dias - 2) * 0.10);
                     a[i].setPrecio(calculo);
                     System.out.println("El ingreso total del alquiler fue: $" + a[i].getPrecio());
+
+                } else {
+
+                    System.out.println("El ingreso total del alquiler fue : $" + a[i].getPrecio());
 
                 }
 
@@ -100,7 +234,7 @@ public class AlquilerService {
 
         if (validacion == 0) {
 
-            System.out.println("La película ingresada no existe.");
+            System.out.println("La película ingresada no existe, o no se encuentra alquilada.");
 
         }
 
@@ -109,14 +243,79 @@ public class AlquilerService {
     public void buscarAlquiler(Alquiler[] a, Pelicula[] p, int cantidad) {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd - MM - yyyy");
         int verificacion = 0;
+        boolean excepcion = false;
+        int dia = 0;
+        int mes = 0;
+        int anio = 0;
+        LocalDate fa = LocalDate.now();
 
         System.out.println("Ingresa la fecha de inicio o fin a buscar");
-        System.out.println("Ingresa el día");
-        int dia = sc.nextInt();
-        System.out.println("Ingresa el mes");
-        int mes = sc.nextInt();
-        System.out.println("Ingresa el año");
-        int anio = sc.nextInt();
+
+        do {
+
+            do {
+
+                try {
+
+                    System.out.println("Ingresa el día");
+                    dia = sc.nextInt();
+                    excepcion = false;
+
+                } catch (InputMismatchException e) {
+
+                    sc.next();
+                    excepcion = true;
+                    System.out.println("Solo puedes ingresar números!");
+
+                }
+
+            } while (excepcion);
+
+        } while (dia < 1 || dia > 31);
+
+        do {
+
+            do {
+
+                try {
+
+                    System.out.println("Ingresa el mes");
+                    mes = sc.nextInt();
+                    excepcion = false;
+
+                } catch (InputMismatchException e) {
+
+                    sc.next();
+                    excepcion = true;
+                    System.out.println("Solo puedes ingresar números!");
+
+                }
+
+            } while (excepcion);
+
+        } while (mes < 1 || mes > 12);
+
+        do {
+
+            do {
+
+                try {
+
+                    System.out.println("Ingresa el año");
+                    anio = sc.nextInt();
+                    excepcion = false;
+
+                } catch (InputMismatchException e) {
+
+                    sc.next();
+                    excepcion = true;
+                    System.out.println("Solo puedes ingresar números!");
+
+                }
+
+            } while (excepcion);
+
+        } while (anio > fa.getYear());
 
         LocalDate fecha = LocalDate.of(anio, mes, dia);
 
@@ -131,7 +330,7 @@ public class AlquilerService {
                 verificacion = 1;
 
                 System.out.println("El alquiler existe, a continuación los datos");
-                System.out.println("Nombre película: " + p[i].getTitulo());
+                System.out.println("Nombre película: " + a[i].getPeliculaAlquilada());
 
                 if (fecha.equals(a[i].getFechaInicio())) {
 
