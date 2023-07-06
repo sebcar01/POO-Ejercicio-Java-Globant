@@ -78,7 +78,7 @@ public class PeliculaService {
 
                 try {
 
-                    System.out.println("Ingresa el año. Tiene que ser de 4 dígitos.");
+                    System.out.println("Ingresa el año. Tiene que ser de 4 dígitos. No puede estar en el futuro.");
                     anio = sc.nextInt();
                     verificacion = String.valueOf(anio);
                     excepcion = false;
@@ -151,7 +151,7 @@ public class PeliculaService {
 
         if (!verificacion) {
 
-            System.out.println("No hay ninguna película disponible.");
+            System.out.println("No hay ninguna película disponible para alquilar.");
 
         }
 
